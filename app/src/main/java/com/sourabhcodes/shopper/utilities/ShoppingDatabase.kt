@@ -1,18 +1,34 @@
 package com.sourabhcodes.shopper.utilities
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.sourabhcodes.shopper.model.ShoppingItem
 
-@Dao
-interface ShoppingDatabase {
+@Database(
+    entities = [ShoppingItem::class],
+    version = 1
+)
+abstract class ShoppingDatabase: RoomDatabase() {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(item : ShoppingItem)
+    abstract fun getShoppingDao(): ShoppingDataAccessObject
 
-    @Delete
-    suspend fun delete(item : ShoppingItem)
+    companion object {
+        @Volatile
+        private var instance: ShoppingDatabase? = null
+        private val LOCK = Any()
 
-    @Query("SELECT * from shopping_items")
-    suspend fun getShoppingItems():LiveData<List<ShoppingItem>>
+        operator fun invoke(context: Context) = instance
+            ?: synchronized(LOCK) {
+                instance
+                    ?: createDatabase(
+                        context
+                    ).also { instance = it }
+            }
+
+        private fun createDatabase(context: Context) =
+            Room.databaseBuilder(context.applicationContext,
+                ShoppingDatabase::class.java, "ShoppingDB.db").build()
+    }
 }
