@@ -16,5 +16,5 @@ class ShoppingViewModel(private val repository: ShoppingRepository): ViewModel()
         repository.delete(item)
     }
 
-    fun getAllItems(item: ShoppingItem) = repository.getAllShoppingItems(item)
+    fun getAllItems() = repository.getAllShoppingItems()
 }
