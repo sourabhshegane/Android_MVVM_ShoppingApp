@@ -1,8 +1,8 @@
-package com.sourabhcodes.shopper.utilities
+package com.sourabhcodes.shopper.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.sourabhcodes.shopper.model.ShoppingItem
+import com.sourabhcodes.shopper.data.db.entities.ShoppingItem
 
 @Dao
 interface ShoppingDataAccessObject {
@@ -14,5 +14,5 @@ interface ShoppingDataAccessObject {
     suspend fun delete(item : ShoppingItem)
 
     @Query("SELECT * from shopping_items")
-    suspend fun getShoppingItems():LiveData<List<ShoppingItem>>
+    fun getShoppingItems():LiveData<List<ShoppingItem>>
 }

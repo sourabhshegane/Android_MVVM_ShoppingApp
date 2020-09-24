@@ -1,4 +1,4 @@
-package com.sourabhcodes.shopper.model
+package com.sourabhcodes.shopper.data.db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
