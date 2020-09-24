@@ -25,7 +25,7 @@ class ShoppingItemAdapter(
     override fun onBindViewHolder(holder: ShoppingViewHolder, position: Int) {
         val currentShoppingItem = items[position]
         holder.itemView.tvName.text = currentShoppingItem.name
-        holder.itemView.tvAmount.text = "Rs. $currentShoppingItem"
+        holder.itemView.tvAmount.text = "Rs. ${currentShoppingItem.amount}"
 
         holder.itemView.ivDelete.setOnClickListener {
             viewModel.delete(currentShoppingItem)
